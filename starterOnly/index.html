@@ -53,13 +53,12 @@
         <div class="content">
           <span class="close"></span>
           <div class="modal-body">
-            <form
-              name="reserve"
-              method="post"
-              action="index.html"
-              onsubmit="validate()"
-            >
-              <div class="formData">
+            <form name="reserve" action="" method="post" autocomplete="off">
+              <div
+                class="formData"
+                data-error="Veuillez entrer 2 caractères ou plus."
+                data-error-visible="false"
+              >
                 <label for="first">Prénom</label><br />
                 <input
                   class="text-control"
@@ -70,7 +69,12 @@
                   required
                 /><br />
               </div>
-              <div class="formData">
+
+              <div
+                class="formData"
+                data-error="Veuillez entrer 2 caractères ou plus."
+                data-error-visible="false"
+              >
                 <label for="last">Nom</label><br />
                 <input
                   class="text-control"
@@ -81,7 +85,11 @@
                   required
                 /><br />
               </div>
-              <div class="formData">
+              <div
+                class="formData"
+                data-error="Veuillez entrer une adresse mail valide."
+                data-error-visible="false"
+              >
                 <label for="email">E-mail</label><br />
                 <input
                   class="text-control"
@@ -91,7 +99,12 @@
                   required
                 /><br />
               </div>
-              <div class="formData">
+
+              <div
+                class="formData"
+                data-error="Vous devez entrer votre date de naissance."
+                data-error-visible="false"
+              >
                 <label for="birthdate">Date de naissance</label><br />
                 <input
                   class="text-control"
@@ -101,7 +114,11 @@
                   required
                 /><br />
               </div>
-              <div class="formData">
+              <div
+                class="formData"
+                data-error="Veuillez indiquer le nombre de participation."
+                data-error-visible="false"
+              >
                 <label for="quantity"
                   >À combien de tournois GameOn avez-vous déjà participé
                   ?</label
@@ -114,12 +131,18 @@
                   min="0"
                   max="99"
                   value="0"
+                  required
                 />
               </div>
+
               <p class="text-label">
                 A quel tournoi souhaitez-vous participer cette année ?
               </p>
-              <div class="formData">
+              <div
+                class="formData"
+                data-error="Vous devez choisir une option."
+                data-error-visible="false"
+              >
                 <input
                   class="checkbox-input"
                   type="radio"
@@ -195,11 +218,16 @@
                 >
               </div>
 
-              <div class="formData">
+              <div
+                class="formData"
+                data-error="Vous devez vérifier que vous acceptez les termes et conditions."
+                data-error-visible="false"
+              >
                 <input
                   class="checkbox-input"
                   type="checkbox"
                   id="checkbox1"
+                  name="termes"
                   checked
                   required
                 />
@@ -208,13 +236,19 @@
                   J'ai lu et accepté les conditions d'utilisation.
                 </label>
                 <br />
-                <input class="checkbox-input" type="checkbox" id="checkbox2" />
+                <input
+                  class="checkbox-input"
+                  type="checkbox"
+                  id="checkbox2"
+                  name="utilisation"
+                />
                 <label class="checkbox2-label" for="checkbox2">
                   <span class="checkbox-icon"></span>
                   Je souhaite être prévenu des prochains évènements.
                 </label>
                 <br />
               </div>
+
               <input
                 class="button btn-submit"
                 type="submit"
