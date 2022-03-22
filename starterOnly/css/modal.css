@@ -136,15 +136,16 @@ main {
   height: 100%;
   width: 100%;
   overflow: auto;
-  background-color: rgba(26, 39, 156, 0.4);
+  background-color: white;
 }
 
 .content {
-  margin: 5% auto;
+  margin: 7% auto;
   width: 100%;
   max-width: 500px;
   animation-name: modalopen;
   animation-duration: var(--modal-duration);
+  box-shadow: 0 10px 7px 2px rgba(0, 0, 0, 0.2);
   background: #232323;
   border-radius: 10px;
   overflow: hidden;
@@ -164,6 +165,7 @@ label {
   font-weight: normal;
   display: inline-block;
   margin-bottom: 11px;
+  text-align: left;
 }
 input {
   padding: 8px;
@@ -206,6 +208,7 @@ input[data-error]::after {
 .checkbox-label,
 .checkbox2-label {
   position: relative;
+  margin-bottom: 0;
   margin-left: 36px;
   font-size: 12px;
   font-weight: normal;
@@ -221,14 +224,14 @@ input[data-error]::after {
   white-space: nowrap;
   position: absolute;
   left: -30px;
-  top: -1px;
+  top: -25%;
   transition: 0.3s;
 }
 .checkbox-label .checkbox-icon::after,
 .checkbox2-label .checkbox-icon::after {
   content: "";
-  width: 13px;
-  height: 13px;
+  width: 14px;
+  height: 14px;
   background-color: #279e7a;
   border-radius: 50%;
   text-indent: 29px;
@@ -303,6 +306,9 @@ input[data-error]::after {
   color: #fff;
   cursor: pointer;
   border: 0;
+}
+.btn-submit {
+  margin-top: 25px;
 }
 /* custom select styles */
 .custom-select {
@@ -393,6 +399,9 @@ input[data-error]::after {
   text-align: left;
   min-width: 424px;
 }
+.hero-section > .btn-signup {
+  display: none;
+}
 .hero-content::after {
   content: "";
   width: 100%;
@@ -441,9 +450,6 @@ input[data-error]::after {
   font-size: 1rem;
   margin: 60px 0 30px;
   font-weight: bolder;
-}
-.hero-section > .btn-signup {
-  display: none;
 }
 footer {
   padding: 0 var(--padding-side);
@@ -520,19 +526,29 @@ footer {
     padding: 8px 30px;
     font-size: 0.7em;
   }
-  .bground {
-    position: absolute;
-    height: auto;
-    background-color: transparent;
-  }
-  .content {
-    margin: 0;
-  }
   .copyrights {
     margin-top: 0;
     margin-bottom: 20px;
     text-align: center;
     font-size: 0.5em;
+  }
+
+  /*** --- MODAL --- ***/
+  .bground {
+    position: absolute;
+    height: 100vh;
+  }
+  .content {
+    border-radius: 10px 10px 0 0;
+    margin: 0;
+    max-width: 100%;
+  }
+  form label,
+  .text-label {
+    font-size: 12px;
+  }
+  .checkbox2-label {
+    font-size: 10px;
   }
 }
 
