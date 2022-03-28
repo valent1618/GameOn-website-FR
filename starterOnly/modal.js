@@ -3,7 +3,6 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const closeModalBtn = document.querySelector(".close");
 const formBody = document.querySelector(".form-body");
-const form = document.querySelector("form");
 const input = document.querySelectorAll("input");
 const labelTournament = document.getElementById("tournament");
 const submit = document.getElementsByClassName("btn-submit")[0];
@@ -44,14 +43,13 @@ submit.addEventListener(
     // if submit button value is "C'est parti"
     if (submit.value === "C'est parti") {
       // and if the form is not valide
-      if (form.checkValidity() === false) {
-        // we display error messages
-        input.forEach((ipt) => handleError(ipt));
-        // and we add animation on submit button
+      if (formIsValidate() === false) {
+        // error messages are displayed with verification
+        // we add animation on submit button
         submit.style.animation =
           "shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both";
       } else {
-        // else if we save the name
+        // we save the name
         let name = document.getElementById("first").value;
         // we change HTML of the formBody
         // for a message with the name
@@ -94,11 +92,75 @@ function closeModal() {
 
 // check validity of an input and handle error
 function handleError(ipt) {
-  if (ipt.validity.valid) {
+  let valid = true;
+
+  switch (ipt.id) {
+    case "first":
+    case "last":
+      if (ipt.value.length < 2) {
+        valid = false;
+      }
+      break;
+    case "email":
+      if (ipt.value.includes("@") === false) {
+        valid = false;
+      }
+      break;
+    case "birthdate":
+    case "quantity":
+      if (ipt.value === "") {
+        valid = false;
+      }
+      break;
+    case "checkbox1":
+      if (ipt.checked === false) {
+        valid = false;
+      }
+      break;
+  }
+
+  if (
+    ipt.name === "location" &&
+    document.getElementById("location1").checked === false &&
+    document.getElementById("location2").checked === false &&
+    document.getElementById("location3").checked === false &&
+    document.getElementById("location4").checked === false &&
+    document.getElementById("location5").checked === false &&
+    document.getElementById("location6").checked === false
+  ) {
+    valid = false;
+  }
+
+  if (valid) {
     // Si l'input est valide on retire l'erreur
     ipt.parentElement.setAttribute("data-error-visible", "false");
   } else {
     // Sinon on l'affiche
     ipt.parentElement.setAttribute("data-error-visible", "true");
   }
+
+  return valid;
 }
+
+// check validity of the form
+function formIsValidate() {
+  let valid = true;
+  input.forEach((ipt) => {
+    if (handleError(ipt) === false) {
+      valid = false;
+      return;
+    }
+  });
+  return valid;
+}
+
+// // function that uses input validity
+// function handleError(ipt) {
+//   if (ipt.validity.valid) {
+//     // Si l'input est valide on retire l'erreur
+//     ipt.parentElement.setAttribute("data-error-visible", "false");
+//   } else {
+//     // Sinon on l'affiche
+//     ipt.parentElement.setAttribute("data-error-visible", "true");
+//   }
+// }
