@@ -3,7 +3,7 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const closeModalBtn = document.querySelector(".close");
 const formBody = document.querySelector(".form-body");
-const input = document.querySelectorAll("input");
+const inputs = document.querySelectorAll("input");
 const labelTournament = document.getElementById("tournament");
 const submit = document.getElementsByClassName("btn-submit")[0];
 
@@ -21,7 +21,7 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 closeModalBtn.addEventListener("click", closeModal);
 
 // Detect validity input
-input.forEach((ipt) =>
+inputs.forEach((ipt) =>
   ipt.addEventListener(
     "input",
     () => {
@@ -93,59 +93,81 @@ function closeModal() {
 // check validity of an input and handle error
 function handleError(ipt) {
   let valid = true;
+  let regex;
 
   switch (ipt.id) {
     case "first":
     case "last":
-      if (ipt.value.length < 2) {
-        valid = false;
-      }
+      // Regex to limit text to alphabet with accent
+      // lowercase or uppercase with the i
+      // min 2 and max 24 characters
+      // and the ability to add a space or a dash
+      // followed by a text respecting the same constraints
+      regex = /^([a-zÜ-ü]{2,24}([ -]{1}[a-zÜ-ü]{2,24})?)$/i;
       break;
     case "email":
-      if (ipt.value.includes("@") === false) {
-        valid = false;
-      }
+      // Regex for mail with limits
+      // 30 alphanumeric characters for each part
+      // min 2 and max 4 for the domain
+      regex = /^[\w-\.]{1,30}@[\w-]{1,30}\.[\w-]{2,4}$/;
       break;
     case "birthdate":
-    case "quantity":
+      // Check if date is empty
       if (ipt.value === "") {
         valid = false;
       }
       break;
+    case "quantity":
+      // Regex for quantity of tournament
+      // number min 0 max 99
+      regex = /^\d{1,2}$/;
+      break;
     case "checkbox1":
+      // Check if box is not checked
       if (ipt.checked === false) {
         valid = false;
       }
       break;
   }
 
-  if (
-    ipt.name === "location" &&
-    document.getElementById("location1").checked === false &&
-    document.getElementById("location2").checked === false &&
-    document.getElementById("location3").checked === false &&
-    document.getElementById("location4").checked === false &&
-    document.getElementById("location5").checked === false &&
-    document.getElementById("location6").checked === false
-  ) {
+  switch (ipt.id) {
+    case "first":
+    case "last":
+    case "email":
+    case "quantity":
+      // Check if test of regex return false;
+      if (regex.test(ipt.value) === false) {
+        valid = false;
+      }
+      break;
+  }
+
+  if (ipt.name === "location") {
     valid = false;
+    for (let i = 1; i < 7; i++) {
+      // Check if a location is checked
+      if (document.getElementById(`location${i}`).checked === true) {
+        valid = true;
+      }
+    }
   }
 
   if (valid) {
-    // Si l'input est valide on retire l'erreur
+    // If input is valid we hide the error
     ipt.parentElement.setAttribute("data-error-visible", "false");
   } else {
-    // Sinon on l'affiche
+    // Else we show it
     ipt.parentElement.setAttribute("data-error-visible", "true");
   }
 
+  // Return valid for use it into formIsValidate()
   return valid;
 }
 
 // check validity of the form
 function formIsValidate() {
   let valid = true;
-  input.forEach((ipt) => {
+  inputs.forEach((ipt) => {
     if (handleError(ipt) === false) {
       valid = false;
       return;
@@ -153,14 +175,3 @@ function formIsValidate() {
   });
   return valid;
 }
-
-// // function that uses input validity
-// function handleError(ipt) {
-//   if (ipt.validity.valid) {
-//     // Si l'input est valide on retire l'erreur
-//     ipt.parentElement.setAttribute("data-error-visible", "false");
-//   } else {
-//     // Sinon on l'affiche
-//     ipt.parentElement.setAttribute("data-error-visible", "true");
-//   }
-// }
